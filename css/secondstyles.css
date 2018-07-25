@@ -1,0 +1,45 @@
+body{
+  font-family: 'Raleway', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  max-height: 900px;
+  /* justify-content: center; */
+}
+
+.page-name {
+  max-width: 90%;
+  color:  blue;
+  height: 10%;
+  font-size: 50px;
+  margin: auto;
+}
+
+ul {
+  cursor: pointer;
+  max-width: 20%;
+}
+
+.listModal{
+  max-width: 20%;
+}
+
+#catContainer {
+  max-width: 75%
+}
+
+#catImage {
+  max-width: 100%;
+  cursor: pointer;
+}
+
+#adminModal {
+  visibility: hidden;
+}
+
+#adminButton{
+  cursor: pointer;
+}
