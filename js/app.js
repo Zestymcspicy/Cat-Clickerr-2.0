@@ -2,6 +2,10 @@ const model = {
 
   imageArray : [],
   currentCat : null,
+
+  createNewCat : function (varName, name, imageLocation) {
+    const varName = new AnimalImage(`${name}`, `${imageLocation}`)
+  }
 }
   class AnimalImage {
     constructor(name, imageLocation) {
@@ -79,13 +83,14 @@ const listView = {
   init : function() {
     this.adminButton = document.getElementById("adminButton");
     this.catList = document.getElementById("catList");
-    this.adminButton.addEventListener("click", this.toggleModal());
-    this.adminModal = document.getElementById("adminModal")
+    this.adminButton.addEventListener("click", function () {
+      admin.init();
+    })
     this.render();
   },
 
   render : function () {
-;
+
     let cats = octopus.getCats();
     for (let cat of cats) {
       let entry = document.createElement("li");
@@ -98,13 +103,24 @@ const listView = {
           };
         })(cat));
     }
-  },
-  toggleModal : function() {
-    if (adminModal.style.display !== "none"){
-      adminModal.style.display = "none";
-    } else {
-      adminModal.style.display = "flex";
-    }
   }
+}
+
+const admin = {
+
+  init : function () {
+    this.adminModal = document.getElementById("adminModal");
+    this.viewToggle();
+    this.clickCount = document.getElementById("modalClick");
+  },
+
+  viewToggle : function() {
+    if (this.adminModal.style.display==="block"){
+      this.adminModal.style.display = "none";
+    } else {this.adminModal.style.display = "block";
+  }
+},
+  modalBox : function() {
+}
 }
 octopus.init();
