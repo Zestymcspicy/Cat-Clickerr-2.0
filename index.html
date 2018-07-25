@@ -14,11 +14,17 @@
     <ul id="catList"></ul>
     <button id ="adminButton">Admin</button>
     <div id="adminModal" class="modal">
-      <form>
-        <input type="text">
-        <input type="text">
-        <input type="text">
+      <div id="newOrEdit" class="modal">
+        <span>Would you like to create a new cat or edit the current cat?</span>
+        <button id="newCatButton">New Cat</button>
+        <button id="editCurrentButton">Edit Current</button>
+      </div>
+      <form id="catEditor">
+        <span id="editorState"></span>
+        cat name<input type="text" name="name">
+        image link<input type="url" name="imageLocation">
         <input type="submit">
+        <span id="modalClick">Clicks = </span>
       </form>
     </div>
   </div>
