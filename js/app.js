@@ -103,6 +103,7 @@ const listView = {
           };
         })(cat));
     }
+<<<<<<< HEAD
   }
 }
 
@@ -120,6 +121,18 @@ const admin = {
     this.editCurrentButton.addEventListener("click", function() {
       this.editCurrentForm();
     })
+||||||| merged common ancestors
+=======
+  }
+}
+
+const admin = {
+
+  init : function () {
+    this.adminModal = document.getElementById("adminModal");
+    this.viewToggle();
+    this.clickCount = document.getElementById("modalClick");
+>>>>>>> 96c2ad25218bdfd662448eec032d480706b237c8
   },
 
   viewToggle : function() {
