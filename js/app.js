@@ -120,6 +120,7 @@ const admin = {
     this.editCurrentButton.addEventListener("click", function() {
       this.editCurrentForm();
     })
+
   },
 
   viewToggle : function() {
