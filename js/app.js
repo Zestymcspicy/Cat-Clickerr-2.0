@@ -49,8 +49,13 @@ const octopus = {
   incrementCounter: function() {
     model.currentCat.clickCount++;
     catView.render();
+  },
+  // TODO: fix this
+  retrieveNew: function() {
+    model.createNewCat(admin.newVarName, admin.newName, admin.newImageLocation);
   }
 };
+
 
 const catView = {
 
@@ -85,6 +90,7 @@ const listView = {
     this.catList = document.getElementById("catList");
     this.adminButton.addEventListener("click", function () {
       admin.init();
+
     })
     this.render();
   },
@@ -115,21 +121,43 @@ const admin = {
     this.newCatButton = document.getElementById("newCatButton");
     this.editCurrentButton = document.getElementById("editCurrentButton");
     this.newCatButton.addEventListener("click", function() {
-      this.newCatForm();
+      admin.newCatForm();
     })
     this.editCurrentButton.addEventListener("click", function() {
-      this.editCurrentForm();
+      admin.editCurrentForm();
     })
+    this.catForm = document.getElementById("catEditor");
+    this.editorState = document.getElementById("editorState");
+    },
 
+  editCurrentForm : function () {
+    let currentCat = octopus.getCurrentCat();
+    this.editorState.innerHTML = "Edit Current";
+    this.catForm.style.display = "block";
+    this.catForm["cname"].value = currentCat.name;
+    this.catForm["imageLocation"].value = currentCat.imageLocation;
+    this.clickCount.innerHTML = `Clicks = ${currentCat.clickCount}`;
+  },
+//TODO: fix this.
+  newCatForm : function () {
+    this.editorState.innerHTML = "Create New";
+    this.catForm.style.display = "block";
+    this.newName = this.catForm["cname"].value;
+    this.newImageLocation = this.catForm["imageLocation"].value;
+    this.newVarName = `${model.currentCat.name}${this.name}`
+    this.submitButton = document.getElementById("submitButton");
+    this.submitButton.addEventListener("click", function(e) {
+      e.preventDefault();
+      octopus.retrieveNew();
+    })
   },
 
-  viewToggle : function() {
+  viewToggle : function () {
     if (this.adminModal.style.display==="block"){
       this.adminModal.style.display = "none";
     } else {this.adminModal.style.display = "block";
   }
 },
-  modalBox : function() {
-}
+
 }
 octopus.init();

@@ -46,6 +46,6 @@ ul {
   cursor: pointer;
 }
 
-#catEditor {
+form {
   display : none;
 }
