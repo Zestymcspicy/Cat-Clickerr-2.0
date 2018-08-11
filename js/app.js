@@ -1,20 +1,28 @@
+class AnimalImage {
+  constructor(name, imageLocation) {
+    this.name = name;
+    this.imageLocation = imageLocation;
+    this.clickCount = 0;
+    model.imageArray.push(this);
+  };
+};
+
 const model = {
 
   imageArray : [],
   currentCat : null,
 
-  createNewCat : function (varName, name, imageLocation) {
-    const varName = new AnimalImage(`${name}`, `${imageLocation}`)
-  }
+  createNewCat : function (name, imageLocation) {
+    new AnimalImage(`${name}`, `${imageLocation}`);
+    octopus.init();
+  },
+
+  editCat : function (cat, editedName, editedImageLocation) {
+    cat.imageLocation = editedImageLocation;
+    cat.name = editedName;
+    octopus.init();
+  },
 }
-  class AnimalImage {
-    constructor(name, imageLocation) {
-      this.name = name;
-      this.imageLocation = imageLocation;
-      this.clickCount = 0;
-      model.imageArray.push(this);
-    };
-  };
 
   const larry = new AnimalImage("Larry Shonsleberry", "images/IMG_1278.png");
   const chewie = new AnimalImage("Chewbacca", "images/chewie.png");
@@ -51,8 +59,12 @@ const octopus = {
     catView.render();
   },
   // TODO: fix this
-  retrieveNew: function() {
-    model.createNewCat(admin.newVarName, admin.newName, admin.newImageLocation);
+  retrieveNew: function(newVarName, newName, newImageLocation) {
+    model.createNewCat(newVarName, newName, newImageLocation);
+  },
+
+  retrieveEdited: function(cat, name, imageLocation) {
+    model.editCat(cat, name, imageLocation);
   }
 };
 
@@ -86,8 +98,9 @@ const catView = {
 const listView = {
 
   init : function() {
-    this.adminButton = document.getElementById("adminButton");
     this.catList = document.getElementById("catList");
+    this.catList.innerHTML = "";
+    this.adminButton = document.getElementById("adminButton");
     this.adminButton.addEventListener("click", function () {
       admin.init();
 
@@ -115,6 +128,7 @@ const listView = {
 const admin = {
 
   init : function () {
+    this.submitButton = document.getElementById("submitButton");
     this.adminModal = document.getElementById("adminModal");
     this.viewToggle();
     this.clickCount = document.getElementById("modalClick");
@@ -132,23 +146,28 @@ const admin = {
 
   editCurrentForm : function () {
     let currentCat = octopus.getCurrentCat();
+    let theForm = this;
     this.editorState.innerHTML = "Edit Current";
     this.catForm.style.display = "block";
     this.catForm["cname"].value = currentCat.name;
     this.catForm["imageLocation"].value = currentCat.imageLocation;
     this.clickCount.innerHTML = `Clicks = ${currentCat.clickCount}`;
-  },
+    this.submitButton.addEventListener("click", function(e) {
+      e.preventDefault();
+      octopus.retrieveEdited(currentCat, theForm.catForm["cname"].value, theForm.catForm["imageLocation"].value);
+      admin.viewToggle();
+  })
+},
 //TODO: fix this.
   newCatForm : function () {
     this.editorState.innerHTML = "Create New";
     this.catForm.style.display = "block";
     this.newName = this.catForm["cname"].value;
     this.newImageLocation = this.catForm["imageLocation"].value;
-    this.newVarName = `${model.currentCat.name}${this.name}`
-    this.submitButton = document.getElementById("submitButton");
+    
     this.submitButton.addEventListener("click", function(e) {
       e.preventDefault();
-      octopus.retrieveNew();
+      octopus.retrieveNew(admin.newVarName, admin.newName, admin.catForm["imageLocation"].value);
     })
   },
 
@@ -156,8 +175,9 @@ const admin = {
     if (this.adminModal.style.display==="block"){
       this.adminModal.style.display = "none";
     } else {this.adminModal.style.display = "block";
-  }
-},
+    }
+  },
+
 
 }
 octopus.init();
