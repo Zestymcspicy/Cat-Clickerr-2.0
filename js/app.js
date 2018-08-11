@@ -59,12 +59,8 @@ const octopus = {
     catView.render();
   },
   // TODO: fix this
-  retrieveNew: function(newVarName, newName, newImageLocation) {
-    model.createNewCat(newVarName, newName, newImageLocation);
-  },
-
-  retrieveEdited: function(cat, name, imageLocation) {
-    model.editCat(cat, name, imageLocation);
+  retrieveNew: function() {
+    model.createNewCat(admin.newVarName, admin.newName, admin.newImageLocation);
   }
 };
 
@@ -110,6 +106,7 @@ const listView = {
 
   render : function () {
 
+    this.catList.innerHTML="";
     let cats = octopus.getCats();
     for (let cat of cats) {
       let entry = document.createElement("li");
@@ -164,10 +161,13 @@ const admin = {
     this.catForm.style.display = "block";
     this.newName = this.catForm["cname"].value;
     this.newImageLocation = this.catForm["imageLocation"].value;
-    
+
+    this.submitButton = document.getElementById("submitButton");
     this.submitButton.addEventListener("click", function(e) {
       e.preventDefault();
-      octopus.retrieveNew(admin.newVarName, admin.newName, admin.catForm["imageLocation"].value);
+      octopus.retrieveNew();
+      admin.viewToggle();
+      octopus.init();
     })
   },
 
