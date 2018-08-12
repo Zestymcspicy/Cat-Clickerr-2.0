@@ -13,14 +13,14 @@ const model = {
   currentCat : null,
 
   createNewCat : function (name, imageLocation) {
-    new AnimalImage(`${name}`, `${imageLocation}`);
+    new AnimalImage(name, imageLocation);
     octopus.init();
   },
 
   editCat : function (cat, editedName, editedImageLocation) {
     cat.imageLocation = editedImageLocation;
     cat.name = editedName;
-    octopus.init();
+    octopus.reset();
   },
 }
 
@@ -42,6 +42,11 @@ const octopus = {
     catView.init()
   },
 
+  reset: function() {
+    catView.render();
+    listView.render();
+  },
+
   getCurrentCat: function() {
     return model.currentCat;
   },
@@ -59,8 +64,12 @@ const octopus = {
     catView.render();
   },
   // TODO: fix this
-  retrieveNew: function() {
-    model.createNewCat(admin.newVarName, admin.newName, admin.newImageLocation);
+  retrieveNew: function(newName, newImageLocation) {
+    model.createNewCat(newName, newImageLocation);
+  },
+
+  retrieveEdited: function(cat, name, imageLocation) {
+      model.editCat(cat, name, imageLocation);
   }
 };
 
@@ -165,7 +174,7 @@ const admin = {
     this.submitButton = document.getElementById("submitButton");
     this.submitButton.addEventListener("click", function(e) {
       e.preventDefault();
-      octopus.retrieveNew();
+      octopus.retrieveNew(`${this.newName}`, `${this.newImageLocation}`);
       admin.viewToggle();
       octopus.init();
     })
